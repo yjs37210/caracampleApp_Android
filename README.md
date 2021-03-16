@@ -1,2 +1,2 @@
 # caracampleApp_Android
-caracample의 앱 (안드로이드)
+caracample의 관리자 앱 (안드로이드)
