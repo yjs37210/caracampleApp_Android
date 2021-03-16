@@ -1,4 +1,4 @@
-# caracampleApp_Android
+# caracampleApp_admin
 CARACAMPLE의 관리자용 앱 
 
 ### 이용 방법
