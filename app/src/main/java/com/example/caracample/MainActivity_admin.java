@@ -60,6 +60,7 @@ public class MainActivity_admin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_admin);
+
         checkSmsPermission();
 
         fragment_map_admin = new MapFragment_Admin();
@@ -70,7 +71,6 @@ public class MainActivity_admin extends AppCompatActivity {
         tv_qna_sum = findViewById(R.id.tv_qna_num);
 
         intent = new Intent(this, MyService.class);
-        intent.putExtra("admin",1);
         startService(intent);
         android.util.Log.i("Start Service", "StartService()");
 
@@ -78,6 +78,7 @@ public class MainActivity_admin extends AppCompatActivity {
         navi.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
                 switch (item.getItemId()) {
                     case R.id.tab_map_admin:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_admin, fragment_map_admin).commit();
@@ -89,6 +90,7 @@ public class MainActivity_admin extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_admin, fragment_qna_admin).commit();
                         break;
                 }
+
                 return true;
             }
         });
@@ -100,7 +102,6 @@ public class MainActivity_admin extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
     }
 
@@ -126,6 +127,7 @@ public class MainActivity_admin extends AppCompatActivity {
         }
         return false;
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

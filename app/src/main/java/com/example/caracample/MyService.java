@@ -42,17 +42,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MyService extends Service {
-    String ip = "192.168.35.251";
-    ServiceThread th = new ServiceThread();
 
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://getdata-from-rapa-default-rtdb.firebaseio.com/");
     DatabaseReference ref = database.getReference();
-    String danger_car_name = "";
-    boolean check = true;
-    String[][] arr = new String[9][2];
-    public static final int MSG_SEND_TO_ACTIVITY = 4;
-    RequestQueue requestQueue; // 데이터가 전송되는 통로
-    StringRequest stringRequest; // 내가 보낼 데이터
 
     public MyService() {
     }
@@ -71,130 +63,62 @@ public class MyService extends Service {
     @Override
     public void onDestroy() {
         android.util.Log.i("서비스 테스트", "onDestroy()");
-        th.interrupt();
         super.onDestroy();
     }
-
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default");
-        builder.setContentText("되라되라얍");
-        builder.setContentTitle("제에모옥");
+        builder.setContentText("text");
+        builder.setContentTitle("title");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            manager.createNotificationChannel(new NotificationChannel("default", "?", NotificationManager.IMPORTANCE_DEFAULT));
-
+            manager.createNotificationChannel(new NotificationChannel("default", "default", NotificationManager.IMPORTANCE_DEFAULT));
         }
 
         Notification notification = builder.build();
         android.util.Log.i("서비스 테스트", "onStartCommand()");
         startForeground(1,notification);
-        th.start();
 
+        for(char i = 65; i <= 73; i++){
+            final int temp = i - 65;
+            String car_name = "Caravan" + i;
+            ref.child("cars_func").child(car_name).child("power").child("fire").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    if(snapshot.getValue().toString().equals("on")){
+
+                        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                        String NOTIFICATION_ID = "10001";
+                        String NOTIFICATION_NAME = "동기화";
+                        int IMPORTANCE = NotificationManager.IMPORTANCE_HIGH;
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            NotificationChannel channel = new NotificationChannel(NOTIFICATION_ID, NOTIFICATION_NAME, IMPORTANCE);
+                            notificationManager.createNotificationChannel(channel);
+                        }
+
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(MyService.this, NOTIFICATION_ID)
+                                .setContentTitle("화재 경보")
+                                .setContentText(car_name + "에서 화재가 발생하였습니다.")
+                                .setSmallIcon(R.drawable.alarm);
+                        notificationManager.notify(temp, builder.build());
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
 
         return super.onStartCommand(intent, flags, startId);
     }
-
-
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-
-            for (int i = 65; i <= 73; i++) {
-                final int temp = i - 65;
-                char c = (char) i;
-                String car_name = "Caravan" + c;
-                ref.child("cars_func").child(car_name).child("power").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.getValue(power.class) != null) {
-                            power power_post = snapshot.getValue(power.class);
-                            if (power_post.getFire().equals("on")) {
-                                danger_car_name += car_name + " ";
-                            }
-                        } else {
-                            Toast.makeText(getApplicationContext(), "데이터 없음", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
-            }
-            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            String NOTIFICATION_ID = "10001";
-            String NOTIFICATION_NAME = "동기화";
-            int IMPORTANCE = NotificationManager.IMPORTANCE_HIGH;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NotificationChannel channel = new NotificationChannel(NOTIFICATION_ID, NOTIFICATION_NAME, IMPORTANCE);
-                notificationManager.createNotificationChannel(channel);
-            }
-            if (!danger_car_name.equals("")) {
-
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(MyService.this, NOTIFICATION_ID)
-                        .setContentTitle("화재 경보")
-                        .setContentText(danger_car_name + "에서 화재가 발생하였습니다.")
-                        .setSmallIcon(R.drawable.alarm);
-                notificationManager.notify(0, builder.build());
-                danger_car_name = "";
-
-            }else{
-                requestQueue = Volley.newRequestQueue(getApplicationContext());
-                String url = "http://"+ip+":8081/ThirdProject/qnAPreSelect.do";
-
-                stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        if (!response.equals("0")) {
-                            NotificationCompat.Builder builder = new NotificationCompat.Builder(MyService.this, NOTIFICATION_ID)
-                                    .setContentTitle("문의사항 알림")
-                                    .setContentText(response+ "개의 문의가 있습니다.")
-                                    .setSmallIcon(R.drawable.alarm);
-                            notificationManager.notify(1, builder.build());
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> data = new HashMap<>();
-                        return data;
-                    }
-                };
-
-                stringRequest.setTag("MAIN");
-                requestQueue.add(stringRequest);
-            }
-
-
-        }
-    };
-
-
-    class ServiceThread extends Thread {
-
-        @Override
-        public void run() {
-            while (true) {
-                Message msg = new Message();
-                handler.sendMessage(msg);
-                try {
-                    Thread.sleep(1500);
-                } catch (InterruptedException e) {
-                    break;
-                }
-            }
-        }
-    }
-
 
 }
