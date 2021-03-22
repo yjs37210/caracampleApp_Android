@@ -25,6 +25,7 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     String ip = "192.168.35.251";
+
     EditText input_id;
     EditText input_pw;
     Button btn_login;
@@ -42,35 +43,35 @@ public class LoginActivity extends AppCompatActivity {
         input_id = findViewById(R.id.input_id);
         input_pw = findViewById(R.id.input_pw);
 
-        String url = "http://"+ip+":8081/ThirdProject/carsLogin.do";
+        String url = "http://" + ip + ":8081/ThirdProject/carsLogin.do?admin=1";
 
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if(response.equals("true")){
-                    Intent intent;
-                        intent = new Intent(LoginActivity.this, MainActivity_admin.class);
-
-                    intent.putExtra("car_name",input_id.getText().toString());
+                if (response.equals("true")) {
+                    Intent intent = new Intent(LoginActivity.this, MainActivity_admin.class);
+                    intent.putExtra("car_name", input_id.getText().toString());
                     input_id.setText("");
                     input_pw.setText("");
                     startActivity(intent);
-                }else{
+                } else if (response.equals("false")) {
                     Toast.makeText(LoginActivity.this, "아이디와 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, "접근이 불가합니다.", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(LoginActivity.this, "에러가 발생하였습니다.", Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> data = new HashMap<>();
-                data.put("car_name",input_id.getText().toString());
-                data.put("pw",input_pw.getText().toString());
+                Map<String, String> data = new HashMap<>();
+                data.put("car_name", input_id.getText().toString());
+                data.put("pw", input_pw.getText().toString());
                 return data;
             }
         };
