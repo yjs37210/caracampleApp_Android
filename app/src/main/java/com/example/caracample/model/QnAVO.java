@@ -1,4 +1,4 @@
-package com.example.caracample;
+package com.example.caracample.model;
 
 public class QnAVO {
 

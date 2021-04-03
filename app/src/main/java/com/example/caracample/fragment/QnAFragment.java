@@ -1,4 +1,4 @@
-package com.example.caracample;
+package com.example.caracample.fragment;
 
 import android.os.Bundle;
 
@@ -8,31 +8,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.caracample.adapter.QnAAdapter;
+import com.example.caracample.model.QnAVO;
+import com.example.caracample.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class QnAFragment_Admin extends Fragment {
+public class QnAFragment extends Fragment {
 
     String ip = "192.168.35.251";
+
     ListView lv;
     ArrayList<QnAVO> list;
     QnAAdapter adapter;

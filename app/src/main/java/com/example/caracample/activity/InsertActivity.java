@@ -1,18 +1,13 @@
-package com.example.caracample;
+package com.example.caracample.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,8 +21,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.caracample.R;
+import com.example.caracample.service.MyService;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -80,7 +76,7 @@ public class InsertActivity extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(), MyService.class);
                             stopService(intent);
                         }
-                        Intent intent = new Intent(getApplicationContext(), MainActivity_admin.class);
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                     }catch(Exception e){
                         Toast.makeText(InsertActivity.this, "전송실패", Toast.LENGTH_SHORT).show();
@@ -92,7 +88,7 @@ public class InsertActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(InsertActivity.this, "오류 발생", Toast.LENGTH_SHORT).show();
             }
         }){
 

@@ -1,16 +1,16 @@
-package com.example.caracample;
+package com.example.caracample.model;
 
-public class power {
+public class PowerVO {
 
     private String air;
     private String fire;
     private String sunroof;
 
-    public power(){
+    public PowerVO(){
 
     }
 
-    public power(String air, String fire, String sunroof) {
+    public PowerVO(String air, String fire, String sunroof) {
         this.air = air;
         this.fire = fire;
         this.sunroof = sunroof;

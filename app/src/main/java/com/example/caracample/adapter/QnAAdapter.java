@@ -1,4 +1,4 @@
-package com.example.caracample;
+package com.example.caracample.adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,6 +19,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.caracample.R;
+import com.example.caracample.model.QnAVO;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -26,7 +28,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class QnAAdapter extends BaseAdapter {
+
     String ip = "192.168.35.251";
+
     private Context co;
     private int layout;
     private ArrayList<QnAVO> data;
@@ -36,8 +40,8 @@ public class QnAAdapter extends BaseAdapter {
     private String time;
 
     private BottomNavigationView navi;
-    RequestQueue requestQueue; // 데이터가 전송되는 통로
-    StringRequest stringRequest; // 내가 보낼 데이터
+    RequestQueue requestQueue;
+    StringRequest stringRequest;
 
     public QnAAdapter(Context co, int layout, ArrayList<QnAVO> data) {
         this.co = co;

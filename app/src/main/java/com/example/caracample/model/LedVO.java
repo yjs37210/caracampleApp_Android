@@ -1,17 +1,17 @@
-package com.example.caracample;
+package com.example.caracample.model;
 
-public class led {
+public class LedVO {
 
     private String bath;
     private String kit;
     private String liv;
     private String outdoor;
 
-    public led(){
+    public LedVO(){
 
     }
 
-    public led(String bath, String kit, String liv, String outdoor) {
+    public LedVO(String bath, String kit, String liv, String outdoor) {
         this.bath = bath;
         this.kit = kit;
         this.liv = liv;

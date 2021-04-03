@@ -1,4 +1,4 @@
-package com.example.caracample;
+package com.example.caracample.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,28 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.caracample.R;
+import com.example.caracample.model.LedVO;
+import com.example.caracample.model.PowerVO;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.HashMap;
-import java.util.Map;
-
-public class ControlActivity_Admin extends AppCompatActivity {
+public class ControlActivity extends AppCompatActivity {
 
     TextView tv_car_name_admin;
     ImageView img_led_liv_admin;
@@ -77,34 +65,34 @@ public class ControlActivity_Admin extends AppCompatActivity {
         ref.child("cars_func").child(car_name).child("led").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue(led.class) != null) {
-                    led led_post = snapshot.getValue(led.class);
-                    led_liv_status = led_post.getLiv();
+                if (snapshot.getValue(LedVO.class) != null) {
+                    LedVO ledVO_post = snapshot.getValue(LedVO.class);
+                    led_liv_status = ledVO_post.getLiv();
                     if(led_liv_status.equals("off")){
                         img_led_liv_admin.setImageResource(R.drawable.led_liv_off);
                     }else if(led_liv_status.equals("on")){
                         img_led_liv_admin.setImageResource(R.drawable.led_liv_on);
                     }
-                    led_kit_status = led_post.getKit();
+                    led_kit_status = ledVO_post.getKit();
                     if(led_kit_status.equals("off")){
                         img_led_kit_admin.setImageResource(R.drawable.led_kit_off);
                     }else if(led_kit_status.equals("on")){
                         img_led_kit_admin.setImageResource(R.drawable.led_kit_on);
                     }
-                    led_bath_status = led_post.getBath();
+                    led_bath_status = ledVO_post.getBath();
                     if(led_bath_status.equals("off")){
                         img_led_bath_admin.setImageResource(R.drawable.led_bath_off);
                     }else if(led_bath_status.equals("on")){
                         img_led_bath_admin.setImageResource(R.drawable.led_bath_on);
                     }
-                    led_outdoor_status = led_post.getOutdoor();
+                    led_outdoor_status = ledVO_post.getOutdoor();
                     if(led_outdoor_status.equals("off")){
                         img_led_outdoor_admin.setImageResource(R.drawable.led_light_off);
                     }else if(led_outdoor_status.equals("on")){
                         img_led_outdoor_admin.setImageResource(R.drawable.led_light_on);
                     }
                 } else {
-                    Toast.makeText(ControlActivity_Admin.this, "데이터 없음", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ControlActivity.this, "데이터 없음", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -117,22 +105,22 @@ public class ControlActivity_Admin extends AppCompatActivity {
         ref.child("cars_func").child(car_name).child("power").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue(power.class) != null){
-                    power power_post = snapshot.getValue(power.class);
-                    air_power_status = power_post.getAir();
+                if(snapshot.getValue(PowerVO.class) != null){
+                    PowerVO powerVO_post = snapshot.getValue(PowerVO.class);
+                    air_power_status = powerVO_post.getAir();
                     if(air_power_status.equals("off")){
                         img_air_power_admin.setImageResource(R.drawable.air_power_off);
                     }else if(air_power_status.equals("on")){
                         img_air_power_admin.setImageResource(R.drawable.air_power_on);
                     }
-                    sunroof_power_status = power_post.getSunroof();
+                    sunroof_power_status = powerVO_post.getSunroof();
                     if(sunroof_power_status.equals("off")){
                         img_sunroof_power_admin.setImageResource(R.drawable.led_sunroof_off);
                     }else if(sunroof_power_status.equals("on")){
                         img_sunroof_power_admin.setImageResource(R.drawable.led_sunroof_on);
                     }
                 }else{
-                    Toast.makeText(ControlActivity_Admin.this, "데이터 없음", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ControlActivity.this, "데이터 없음", Toast.LENGTH_SHORT).show();
                 }
             }
 

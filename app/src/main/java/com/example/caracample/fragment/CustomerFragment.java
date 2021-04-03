@@ -1,4 +1,4 @@
-package com.example.caracample;
+package com.example.caracample.fragment;
 
 import android.os.Bundle;
 
@@ -16,6 +16,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.caracample.adapter.CustomerAdapter;
+import com.example.caracample.model.CustomerVO;
+import com.example.caracample.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

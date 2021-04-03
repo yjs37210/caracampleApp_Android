@@ -1,8 +1,10 @@
-package com.example.caracample;
+package com.example.caracample.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.caracample.R;
 
 public class FireActivity extends AppCompatActivity {
 

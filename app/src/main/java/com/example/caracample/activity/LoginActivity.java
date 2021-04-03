@@ -1,9 +1,7 @@
-package com.example.caracample;
+package com.example.caracample.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.caracample.R;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 if (response.equals("true")) {
-                    Intent intent = new Intent(LoginActivity.this, MainActivity_admin.class);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.putExtra("car_name", input_id.getText().toString());
                     input_id.setText("");
                     input_pw.setText("");

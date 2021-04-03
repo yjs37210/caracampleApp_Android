@@ -1,4 +1,4 @@
-package com.example.caracample;
+package com.example.caracample.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+import com.example.caracample.R;
 
 public class LoadingActivity extends AppCompatActivity {
 

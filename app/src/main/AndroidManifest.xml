@@ -15,24 +15,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CARACAMPLE"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FireActivity"></activity>
+        <activity android:name=".activity.FireActivity"></activity>
 
         <service
-            android:name=".MyService"
+            android:name=".service.MyService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".InsertActivity" />
-        <activity android:name=".ControlActivity_Admin" />
-        <activity android:name=".MainActivity_admin" />
-        <activity android:name=".LoadingActivity">
+        <activity android:name=".activity.InsertActivity" />
+        <activity android:name=".activity.ControlActivity" />
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".activity.LoginActivity" />
     </application>
 
 </manifest>

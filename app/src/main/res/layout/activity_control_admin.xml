@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginStart="6dp"
-    tools:context=".ControlActivity_Admin">
+    tools:context=".activity.ControlActivity">
 
     <ImageView
         android:id="@+id/img_led_liv_admin"

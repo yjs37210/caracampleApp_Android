@@ -1,4 +1,4 @@
-package com.example.caracample;
+package com.example.caracample.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,23 +19,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.caracample.R;
+import com.example.caracample.fragment.CustomerFragment;
+import com.example.caracample.fragment.MapFragment;
+import com.example.caracample.fragment.QnAFragment;
+import com.example.caracample.service.MyService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-public class MainActivity_admin extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView navi;
     Fragment fragment_map_admin;
@@ -63,9 +54,9 @@ public class MainActivity_admin extends AppCompatActivity {
 
         checkSmsPermission();
 
-        fragment_map_admin = new MapFragment_Admin();
+        fragment_map_admin = new MapFragment();
         fragment_customer = new CustomerFragment();
-        fragment_qna_admin = new QnAFragment_Admin();
+        fragment_qna_admin = new QnAFragment();
         navi = findViewById(R.id.bottomNavigationView2);
         btn_insert = findViewById(R.id.btn_insert);
         tv_qna_sum = findViewById(R.id.tv_qna_num);
@@ -98,7 +89,7 @@ public class MainActivity_admin extends AppCompatActivity {
         btn_insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity_admin.this, InsertActivity.class);
+                Intent intent = new Intent(MainActivity.this, InsertActivity.class);
                 startActivity(intent);
             }
         });
