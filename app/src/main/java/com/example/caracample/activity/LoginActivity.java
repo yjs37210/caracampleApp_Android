@@ -1,15 +1,21 @@
 package com.example.caracample.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageHelper;
+import androidx.constraintlayout.solver.state.State;
+import androidx.constraintlayout.solver.widgets.Helper;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,7 +29,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    String ip = "192.168.35.251";
+    String ip = "192.168.35.63";
 
     EditText input_id;
     EditText input_pw;
@@ -47,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+
                 if (response.equals("true")) {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.putExtra("car_name", input_id.getText().toString());
@@ -58,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(LoginActivity.this, "접근이 불가합니다.", Toast.LENGTH_SHORT).show();
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -82,5 +90,13 @@ public class LoginActivity extends AppCompatActivity {
                 requestQueue.add(stringRequest);
             }
         });
+    }
+
+    public String login(String id, String pw){
+        String result = "false";
+        if(id.equals("CaravanAdmin")&&pw.equals("1234")){
+            result = "true";
+        }
+        return result;
     }
 }
